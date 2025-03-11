@@ -1,5 +1,18 @@
 const contactService = require("../services/contactService");
 
+//Create new contact
+exports.createContacts = async (req, res) => {
+  const data = req.body;
+  try {
+    const newContact = await contactService.createContact(data);
+    if (newContact) {
+      res.status(201).json(newContact);
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Failed to create new contact", error });
+  }
+};
+
 // Fetch all contact details
 exports.getContacts = async (req, res) => {
   try {
@@ -30,15 +43,43 @@ exports.getContactById = async (req, res) => {
   }
 };
 
-//Create new contact
-exports.createContacts = async (req, res) => {
+//Update a contact detail
+exports.updateContact = async (req, res) => {
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!",
+    });
+  }
+  const id = req.params.id;
   const data = req.body;
+
   try {
-    const newContact = await contactService.createContact(data);
-    if (newContact) {
-      res.status(201).json(newContact);
+    const updatedContact = await contactService.updateContact(id, data);
+    if (!updatedContact) {
+      return res(404).json({ message: "Contact not Found" });
     }
+    res.json({
+      updatedContact,
+      message: "Contact updated successfully",
+    });
   } catch (error) {
-    res.status(500).json({ message: "Failed to create new contact", error });
+    res.status(500).json({
+      message: "Failed to update contact",
+      error,
+    });
+  }
+};
+
+exports.deleteContact = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const deletedContact = await contactService.deleteContact(id);
+    if (!deletedContact) {
+      return res.status(404).json({ message: "Contact not found" });
+    }
+    res.json({ message: "Contact deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete contact", error });
   }
 };
