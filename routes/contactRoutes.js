@@ -7,11 +7,13 @@ const {
   deleteContact,
 } = require("../controllers/contactController");
 const router = express.Router();
+const authenticateAPIKey = require("../utils/apiKeyMiddleware");
 
-router.get("/contacts", getContacts);
-router.get("/contacts/:id", getContactById);
-router.post("/contacts", createContacts);
-router.put("/contacts/:id", updateContact);
-router.delete("/contacts/:id", deleteContact);
+
+router.post("/contacts", authenticateAPIKey, createContacts);
+router.get("/contacts", authenticateAPIKey, getContacts);
+router.get("/contacts/:id", authenticateAPIKey, getContactById);
+router.put("/contacts/:id", authenticateAPIKey, updateContact);
+router.delete("/contacts/:id", authenticateAPIKey, deleteContact);
 
 module.exports = router;
