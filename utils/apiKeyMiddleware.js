@@ -7,13 +7,13 @@ const authenticateAPIKey = (req, res, next) => {
 
   if (!apiKey) {
     return res.status(401).json({ 
-      message: "Unauthorized: Missing API Key. Request an API key by contacting ebinuga@hotmail.com." 
+      message: "Unauthorized: documentationUrl - https://code-lova.github.io/cse341-contactApi-postman-doc" 
     });
   }
 
   if (apiKey !== API_KEY) {
     return res.status(403).json({ 
-      message: "Forbidden: Invalid API Key. Request an API key by contacting ebinuga@hotmail.com." 
+      message: "Forbidden: See documentation - https://code-lova.github.io/cse341-contactApi-postman-doc" 
     });
   }
 
