@@ -6,7 +6,7 @@ const doc = {
     description: "API for managing contacts with API key authentication.",
     version: "1.0.0",
   },
-  host: "localhost:8080", // Change this if deployed
+  host: "cse341-contacts-073h.onrender.com", // Change this if deployed
   schemes: ["http", "https"],
   securityDefinitions: {
     apiKeyAuth: {
